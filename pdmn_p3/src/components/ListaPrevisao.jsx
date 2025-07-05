@@ -18,24 +18,25 @@ const ListaPrevisao = () => {
       }
 
       const data = await response.json()
-
+      console.log(data)
       const novasPrevisoes = data.list.map((p) => {
         const item = {
           dataHora: new Date(p.dt * 1000),
-          icone: p.weather[0].icon,
-          descricao: p.weather[0].description,
+          icone: p.icon,
+          descricao: p.description,
         }
 
         if (opcao === 'temp') {
-          item.min = p.main.temp_min
-          item.max = p.main.temp_max
+          item.min = p.temp_min;
+          item.max = p.temp_max;
         } else if (opcao === 'press') {
-          item.umidade = p.main.humidity
-          item.pressao = p.main.pressure
+          item.umidade = p.humidity;
+          item.pressao = p.pressure;
         }
 
         return item
       })
+
 
       setPrevisoes(novasPrevisoes)
     } catch (erro) {
@@ -71,7 +72,6 @@ const ListaPrevisao = () => {
                 <span className="text-sm text-gray-700 mb-1">
                   {striptags(p.descricao)}
                 </span>
-
                 {p.min !== undefined && (
                   <span className="text-sm text-gray-600">
                     <strong>Mín:</strong> {p.min.toFixed(1)}°C | <strong>Máx:</strong> {p.max.toFixed(1)}°C
@@ -81,10 +81,10 @@ const ListaPrevisao = () => {
                 {p.umidade !== undefined && (
                   <div>
                     <span className="text-sm text-gray-600">
-                      <strong>Umidade:</strong> {p.umidade}%
+                      <strong>Umidade:</strong> {p.umidade}% |
                     </span>
                     <span className="text-sm text-gray-600">
-                      <strong>Pressão:</strong> {p.pressao} hPa
+                      <strong> Pressão:</strong> {p.pressao} hPa
                     </span>
                   </div>
                 )}
